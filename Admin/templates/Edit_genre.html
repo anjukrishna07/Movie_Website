@@ -1,0 +1,23 @@
+{% extends 'admin_home.html' %}
+{% block first %}
+<br><br>
+<br>
+<br>
+<h1>Edit your profile</h1>
+{% for i in details %}
+<form action="{% url 'Editgen' i.id %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="name">Movie Name</label>
+    <input type="text" id="name" name="name" value="{{i.name}}">
+    <br>
+ 
+    <label for="image">Movie Poster</label>
+    <input type="file" id="image" name="image" value="{{i.image}}">
+    <br>
+
+
+    <button type="submit">Update</button>
+</form>
+{% endfor %}
+
+{% endblock %}

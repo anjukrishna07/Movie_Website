@@ -1,0 +1,26 @@
+{% extends 'admin_home.html' %}
+
+{% block first %}
+<div class="container mt-4">
+    <h2 class="fw-bold">Movie Reactions</h2>
+    
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Movie Name</th>
+                <th>Likes</th>
+                <th>Dislikes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ movie.name }}</td>
+                <td>{{ likes_count }}</td>
+                <td>{{ dislikes_count }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+  
+</div>
+{% endblock %}

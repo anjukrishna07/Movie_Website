@@ -1,0 +1,24 @@
+{% extends 'admin_home.html' %}
+
+{% block first %}
+<br><br>
+<br><br>
+<h1 style="color: #a54caf; text-align: center;">Movie Details</h1>
+
+{% for i in details %}
+    <div style="border: 2px solid #ddd; padding: 20px; margin: 20px auto; width: 80%; text-align: center; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
+        <h2 style="color: #333; font-size: 24px;">Movie Name: {{ i.name }}</h2>
+        <h2 style="color: #666; font-size: 20px;">Release Date: {{ i.date }}</h2>
+        
+        <h2 style="color: #444; font-size: 20px;">Movie Poster:</h2>
+        <img src="{{ i.image.url }}" alt="Movie Poster" style="display: block; margin: 10px auto; width: 500px; height: 300px; object-fit: cover; border-radius: 10px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);">
+
+        <h2 style="color: #444; font-size: 20px;">Movie Trailer:</h2>
+        <video width="500" height="300" controls style="display: block; margin: 10px auto; border-radius: 10px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);">
+            <source src="{{ i.video.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+{% endfor %}
+
+{% endblock %}

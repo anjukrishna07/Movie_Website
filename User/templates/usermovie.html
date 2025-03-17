@@ -1,0 +1,75 @@
+{% extends 'account.html' %}
+{% load static %}
+{% block first %}
+
+<!-- Include Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<!-- Page Background -->
+<div style="background: linear-gradient(to right, #141e30, #243b55); min-height: 100vh; padding: 40px 0;">
+
+    <div class="container">
+        <h3 style="color: white; text-align: center; font-size: 28px; font-weight: bold; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px;">
+            Watch Movie Trailers
+        </h3>
+
+        <div class="row">
+            {% for i in details %}
+            <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center mb-4">
+                <div class="card" style="width: 100%; background: linear-gradient(to bottom, #304352, #d7dde8); box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3); border-radius: 15px; overflow: hidden; transition: transform 0.3s ease-in-out;">
+                    
+                    <div class="card-body" style="padding: 20px; text-align: center; border-radius: 15px;">
+
+                        {% if i.image %}
+                        <!-- Clickable Image (Redirects to Movie Detail Page) -->
+                        <a href="{% url 'moviedetail' i.id %}" style="display: block;">
+                            <img src="{{ i.image.url }}" alt="{{ i.name }}"
+                                style="width: 100%; height: 220px; object-fit: cover; border-radius: 10px; background: black;">
+                        </a>
+                        {% else %}
+                        <p class="card-text" style="color: white;">No image available for this movie.</p>
+                        {% endif %}
+
+                        <!-- Like, Title, and Dislike Section -->
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 12px;">
+                            
+                            <!-- Like Button -->
+                            <form action="{% url 'like_movie' i.id %}" method="POST" style="display: flex; align-items: center;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn" style="background: #ff4b5c; color: white; border-radius: 50px; padding: 7px 18px; font-size: 20px; transition: 0.3s;">
+                                    <i class="fa-solid fa-thumbs-up"></i>
+                                </button>
+                                <span style="margin-left: 6px; font-weight: bold; color: white; font-size: 18px;">{{ i.likes }}</span>
+                            </form>
+
+                            <!-- Movie Name -->
+                            <h2 class="card-title" style="font-size: 18px; font-weight: bold; color: #222; margin: 0;">
+                                <a href="{% url 'moviedetail' i.id %}" style="text-decoration: none; color: inherit;">
+                                    {{ i.name }}
+                                </a>
+                            </h2>
+
+                            <!-- Dislike Button -->
+                            <form action="{% url 'dislike_movie' i.id %}" method="POST" style="display: flex; align-items: center;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn" style="background: #34495e; color: white; border-radius: 50px; padding: 7px 18px; font-size: 20px; transition: 0.3s;">
+                                    <i class="fa-solid fa-thumbs-down"></i>
+                                </button>
+                                <span style="margin-left: 6px; font-weight: bold; color: white; font-size: 18px;">{{ i.dislikes }}</span>
+                            </form>
+
+                        </div>
+
+                        <!-- Movie Date -->
+                        <h4 class="card-subtitle" style="font-size: 14px; color:red; margin-top: 8px;">{{ i.date }}</h4>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}     

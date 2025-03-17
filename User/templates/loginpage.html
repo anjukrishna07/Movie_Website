@@ -1,0 +1,41 @@
+{% extends 'userhome.html' %}
+{% load static %}
+
+{% block first %}
+<div class="d-flex justify-content-center align-items-center"
+    style="min-height: 100vh; background: url('{% static 'css/img/1.jpg' %}') no-repeat center center/cover;">
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow p-4">
+            <div class="card-header text-center">
+                <div class="card-title">
+                    <h1>LOGIN PAGE</h1>
+                </div>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" required />
+
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required />
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary mt-3">Login</button>
+
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block second %}
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'admin_home.html' %}
+{% block first %}
+
+<div class="container">
+    <div class="page-inner">
+      <div class="page-header">
+        <h3 class="fw-bold mb-3">Tables</h3>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">User Details</div>
+            </div>
+            <div class="card-body">
+              
+              <table class="table mt-3">
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone number</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">Confirm Password</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                {% for i in details %}    
+                <tr>
+                    <td>{{i.name}}</td>
+                    <td>{{i.phone}}</td>
+                    <td>{{i.email}}</td>
+                    <td>{{i.password}}</td>
+                    <td>{{i.confirm_password}}</td>
+
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+{% endblock %}

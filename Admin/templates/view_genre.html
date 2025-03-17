@@ -1,0 +1,32 @@
+{% extends 'admin_home.html' %}
+{% block first %}
+
+<p class="post-category">Latest Movies</p>
+
+<div class="container">
+  <div class="row gy-4 d-flex justify-content-center">
+    
+    {% for i in details %}
+    <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center" 
+         style="margin-bottom: 20px;"> <!-- Ensures 3 per row on large screens, 2 on medium, 1 on small -->
+      <article style="width: 90%; max-width: 300px; background: white; padding: 15px; 
+                      border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+                      text-align: center;">
+        <div class="post-img">
+          {% if i.image %}
+          <img src="{{ i.image.url }}" alt="Movie Image" class="img-fluid" 
+               style="width: 100%; height: 250px; object-fit: cover; border-radius: 10px;">
+          {% else %}
+          <p>No image available for this movie.</p>
+          {% endif %}
+        </div>
+
+        <h2 class="title" style="margin-top: 10px;">{{ i.name }}</h2>
+      </article>
+    </div>
+    {% endfor %}
+
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'genreoption.html' %}
+{% load static %}
+
+{% block subscription %}
+<div class="container" style="margin-top: 120px; margin-bottom: 100px;">
+    <h2 class="text-center mt-4">🎬 Watch Later List</h2>
+
+    {% if watch_later_movies %}
+    <div class="row">
+        {% for movie in watch_later_movies %}
+        <div class="col-md-4">
+            <br>
+            <div class="card mb-3"
+                style="border-radius: 10px; overflow: hidden; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+                <video controls style="width: 100%; height: auto; border-radius: 10px 10px 0 0;">
+                    <source src="{{ movie.video.url }}" type="video/mp4">
+                </video>
+                <div class="card-body" style="text-align: center;">
+                    <h5 class="card-title" style="font-weight: bold; color: #333;">{{ movie.name }}</h5>
+                    <form action="{% url 'toggle_watch_later' movie.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger"
+                            style="width: 100%; padding: 20px; font-size: 16px; border-radius: 5px;">Remove from Watch
+                            Later</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-center mt-4" style="font-size: 18px; color: #777;">No movies in Watch Later.</p>
+    {% endif %}
+</div>
+{% endblock %}

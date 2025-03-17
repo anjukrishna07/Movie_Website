@@ -1,0 +1,107 @@
+{% extends 'account.html' %}
+{% load static %}
+{% block first %}
+<div style="background: linear-gradient(to right, #141e30, #243b55); min-height: 100vh; padding: 40px 0;">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card"
+                    style="width: 100%; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); border-radius: 12px;">
+                    <div class="card-body text-center">
+
+                        {% if moviedtl %}
+                        <video controls
+                            style="width: 100%; aspect-ratio: 16/9; background: black; border-radius: 12px;">
+                            <source src="{{ moviedtl.video.url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        {% else %}
+                        <p class="text-center text-muted mt-3">No video available.</p>
+                        {% endif %}
+
+                        <h2 class="card-title mt-3">{{ moviedtl.name }}</h2>
+                        <h4 class="card-subtitle text-muted">{{ moviedtl.date }}</h4>
+
+                        <!-- Buttons Row -->
+                        <div class="d-flex justify-content-around mt-3">
+
+                            <!-- Like Button -->
+                            <form action="{% url 'like_movie' moviedtl.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit"
+                                    style="background-color: {% if user_has_liked %}red{% else %}transparent{% endif %}; color: {% if user_has_liked %}white{% else %}black{% endif %}; border: 1px solid red; padding: 8px 16px; border-radius: 5px;">
+                                    👍 Like ({{ moviedtl.likes }})
+                                </button>
+                            </form>
+
+                            <!-- Dislike Button -->
+                            <form action="{% url 'dislike_movie' moviedtl.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit"
+                                    style="background-color: {% if user_has_disliked %}black{% else %}transparent{% endif %}; color: {% if user_has_disliked %}white{% else %}black{% endif %}; border: 1px solid black; padding: 8px 16px; border-radius: 5px;">
+                                    👎 Dislike ({{ moviedtl.dislikes }})
+                                </button>
+                            </form>
+
+                            <!-- Comment -->
+                            <a href="{% url 'comment' moviedtl.id %}" class="btn btn-outline-secondary">
+                                💬 Comment
+                            </a>
+
+                            <!-- Share Dropdown -->
+                            <div class="dropdown">
+                                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="shareDropdown"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    🔗 Share
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="shareDropdown">
+                                    <li><a class="dropdown-item"
+                                            href="https://wa.me/?text=Check%20out%20this%20movie:%20{{ moviedtl.video.url }}"
+                                            target="_blank">
+                                            📱 WhatsApp</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="https://www.facebook.com/sharer/sharer.php?u={{ moviedtl.video.url }}"
+                                            target="_blank">
+                                            📘 Facebook</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="https://twitter.com/intent/tweet?text=Check%20out%20this%20movie:%20{{ moviedtl.video.url }}"
+                                            target="_blank">
+                                            🐦 Twitter</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="mailto:?subject=Check%20out%20this%20movie&body=Watch%20this%20awesome%20movie:%20{{ moviedtl.video.url }}">
+                                            📧 Email</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Download -->
+                            {% if moviedtl.video %}
+                            <a href="{{ moviedtl.video.url }}" download class="btn btn-outline-success">
+                                ⬇️ Download
+                            </a>
+                            {% endif %}
+
+                            <!-- Watch Later Button -->
+                            <form action="{% url 'toggle_watch_later' moviedtl.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" style="
+                                    background-color: {% if user_has_watch_later %}yellow{% else %}transparent{% endif %};
+                                    color: black; 
+                                    border: 1px solid yellow; 
+                                    padding: 8px 16px; 
+                                    border-radius: 5px;
+                                    cursor: pointer;">
+                                    ⭐ Watch Later
+                                </button>
+                            </form>
+                            
+                        </div> <!-- End .d-flex -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    {% endblock %}

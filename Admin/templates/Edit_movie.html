@@ -1,0 +1,26 @@
+{% extends 'admin_home.html' %}
+{% block first %}
+<br><br>
+<br>
+<br>
+<h1>Edit your profile</h1>
+{% for i in details %}
+
+
+    <label for="date">Release Date</label>
+    <input type="date" id="date" name="date" value="{{i.date}}">
+    <br>
+
+    <label for="image">Movie Poster</label>
+    <input type="file" id="image" name="image" value="{{i.image}}">
+    <br>
+
+    <label for="video">Movie Trailer</label>
+    <input type="file" id="video" name="video" value="{{i.video}}">
+    <br>
+
+    <button type="submit">Update</button>
+</form>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'admin_home.html' %}
+{% block first %}
+<form action="{% url 'addgenre' %}" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Form Elements</div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6 col-lg-4">
+              <div class="form-group">
+                <label for="name">Add Genre</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name" name="name"
+                  placeholder="Enter Movie name"
+                />
+            
+
+              <div class="form-group">
+                <label for="image">Upload Image</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="image" name="image"
+                  placeholder="Upload Movie Poster"
+                />
+
+
+
+
+                </div>
+                <div class="card-action">
+                    <button class="btn btn-success">Submit</button>
+                    <button class="btn btn-danger">Cancel</button>
+                  </div>
+
+
+                
+{% endblock %}

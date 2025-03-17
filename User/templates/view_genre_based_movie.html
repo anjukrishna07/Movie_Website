@@ -1,0 +1,29 @@
+{% extends 'account.html' %}
+{% load static %}
+{% block first %}
+<div style="background: linear-gradient(to right, #141e30, #243b55); width: 100vw; min-height: 100%; margin: 0; padding: 20px;">
+    <div class="container" style="max-width: 1200px; margin: auto; border-radius: 12px; padding: 20px;">
+        <div class="row">
+            <h3 style="color: rgb(214, 24, 24); margin-top: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">SELECTED GENRE</h3>
+            {% for i in filtered_movie %}
+            <div class="col-lg-6 col-md-6 col-sm-12 d-flex justify-content-center mb-4">
+                <div class="card" style="width: 100%; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); border-radius: 12px; overflow: hidden; transition: transform 0.3s ease-in-out; background: #fff;">
+                    <div class="card-body" style="text-align: center; padding: 15px;">
+                        {% if i.video %}
+                        <video controls style="width: 100%; aspect-ratio: 16/9; object-fit: contain; border-top-left-radius: 12px; border-top-right-radius: 12px; background: black;">
+                            <source src="{{ i.video.url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <h2 class="card-title" style="font-size: 20px; font-weight: bold; color: #333; margin-top: 10px;">{{ i.name }}</h2>
+                        <h4 class="card-subtitle" style="font-size: 16px; color: #666; margin-bottom: 10px;">{{ i.date }}</h4>
+                        {% else %}
+                        <p class="card-text" style="color: #666;">No video available for this movie.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

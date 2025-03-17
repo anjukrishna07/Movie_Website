@@ -1,0 +1,46 @@
+{% extends 'admin_home.html' %}
+{% block first %}
+
+<div class="container">
+    <div class="page-inner">
+        <div class="page-header">
+            <h3 class="fw-bold mb-3">Tables</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">User Comments</div>
+                    </div>
+                    <div class="card-body">
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>USERNAME</th>
+                                    <th>COMMENTS</th>
+                                    <th>DATE</th>
+                                    
+                                    <th>DELETE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for comment in comments %}
+                                <tr>
+                                    <td>{{ comment.user.name }}</td>
+                                    <td>{{ comment.comments }}</td>
+                                    <td>{{ comment.created_at|date:"d M Y, H:i" }}</td>
+                                   
+                                    <td><a href="{% url 'deletecomment' comment.id movie.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="4" class="text-center">No comments available.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endblock %}

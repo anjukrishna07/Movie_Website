@@ -1,0 +1,61 @@
+{% extends 'admin_home.html' %}
+{% block first %}
+<form action="{% url 'addpremium' %}" method="post">
+{% csrf_token %}
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Premium</div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6 col-lg-4">
+
+             <br><br><br>
+
+              <div class="form-group">
+                <label for="name">premium Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name" name="plan_name"
+                  placeholder="Enter premium name"
+                />
+                
+                
+              </div>
+              <div class="form-group">
+                <label for="date">validity</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="number" name="duration_days"
+                  placeholder="number"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="Number">price</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="number" name="price"
+                  placeholder="Price"
+                />
+                </div>
+
+
+
+
+                
+                  
+                </div>
+                <div class="card-action">
+                    <button class="btn btn-success">Submit</button>
+                    <button class="btn btn-danger">Cancel</button>
+                  </div>
+
+
+                
+{% endblock %}

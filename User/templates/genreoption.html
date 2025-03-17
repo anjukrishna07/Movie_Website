@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Play Show</title>
+
+    <!-- CSS Files -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/global.css' %}" rel="stylesheet">
+    <link href="{% static 'css/about.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Overpass&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+    <!-- JavaScript Files -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div class="main clearfix position-relative">
+        <div class="main_1 clearfix position-absolute top-0 w-100">
+            <section id="header" class="position-fixed w-100 top-0 z-index-1000">
+                <nav class="navbar navbar-expand-md navbar-light bg-dark">
+                    <div class="container-xl">
+                        <a class="navbar-brand fs-2 fw-bold text-white" href="{% url 'usermovie' %}">
+                            <i class="fa-brands fa-youtube me-1 col_red"></i>
+                            Play Show
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav">
+                                <li class="nav-item"><a class="nav-link" href="{% url 'usermovie' %}">Home</a></li>
+                                <li class="nav-item"><a class="nav-link active" href="{% url 'about' %}">About</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{% url 'genreoption' %}">Genre</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{% url 'teams' %}">Team</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+                            </ul>
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item"><a class="nav-link" href="{% url 'viewaccount' %}"><i
+                                            class="fa fa-user col_red"></i> Account</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </section>
+        </div>
+    </div>
+    
+    
+        {% block subscription %}
+        <!-- Genre Selection Section -->
+        <div class="main_about clearfix">
+            <section id="center" class="center_blog">
+                <div class="container-xl text-center">
+                    <h2 style="color: red; margin-top: 100px;">SELECT YOUR FAVORITE GENRE</h2>
+
+                    {% if genres %}
+                    <div class="d-flex flex-wrap justify-content-center mt-3">
+                        {% for i in genres %}
+                        <a href="{% url 'view_genre_based_movie' i.id %}" class="m-2">
+                            <button class="btn btn-danger px-4 py-2 fw-bold">
+                                {{ i.name }}
+                            </button>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p style="color: red; font-size: 18px;">No genres available.</p>
+                    {% endif %}
+
+                </div>
+            </section>
+        </div>
+        {% endblock %}
+        <!-- Footer -->
+        <section id="footer_b" class="bg-dark text-white text-center py-3" 
+        style="position: fixed; bottom: 0; left: 0; width: 100%;">
+        <div class="container-xl">
+            <p class="mb-0">© 2023 Your Website Name. All Rights Reserved | Design by 
+                <a class="col_red" href="http://www.templateonweb.com">TemplateOnWeb</a>
+            </p>
+        </div>
+    </section>
+    
+
+    </div>
+
+</body>
+
+</html>

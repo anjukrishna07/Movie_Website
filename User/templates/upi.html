@@ -1,0 +1,41 @@
+{% extends 'genreoption.html' %}
+{% load static %}
+
+{% block subscription %}
+
+<div style="background-color: #343a40; color: white; padding: 10px 0; text-align: center;">
+    <h1>Movie Website</h1>
+    <p>Subscribe to enjoy unlimited movie streaming!</p>
+</div>
+
+<div class="container" style="text-align: center; margin-top: 50px;">
+    <h2>Subscription Payment</h2>
+    <p style="font-size: 18px; margin-bottom: 20px;">Subscribe for ₹500 per month to enjoy unlimited access.</p>
+
+    <!-- UPI Subscription Button -->
+    <a href="upi://pay?pa=moviewebsite@upi&pn=Movie%20Website&mc=123456&tid=SUB12345&url=https://moviewebsite.com&am=500.00&cu=INR"
+       style="background-color: #28a745; color: white; font-size: 18px; padding: 15px 25px; border-radius: 5px; text-decoration: none; transition: background-color 0.3s ease;">
+        <i class="fas fa-credit-card me-2"></i> Subscribe with UPI
+    </a>
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
