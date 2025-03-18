@@ -461,51 +461,33 @@ def payment_page(request):
 
 
 
-from django.core.mail import EmailMessage
-from django.template.loader import render_to_string
-from django.conf import settings
-from django.contrib.auth.models import User
-
-def send_welcome_email(user):
-    """Send a welcome email after user registration."""
-    template = render_to_string('email_template.html', {'name': user.first_name})
-    
-    email = EmailMessage(
-        subject="Welcome to Play Show!",
-        body=template,
-        from_email=settings.EMAIL_HOST_USER,
-        to=[user.email],
-    )
-    email.content_subtype = "html"  # Ensure HTML formatting
-    email.fail_silently = False
-    email.send()
-
 def register(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        phone = request.POST.get('phone')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        confirm_password = request.POST.get('confirm_password')
+    if request.method =='POST':
+        name=request.POST.get('name')
+        phone=request.POST.get('phone')
+        email=request.POST.get('email')
+        password=request.POST.get('password')
+        confirm_password=request.POST.get('confirm_password')
+       
+    
 
         if password == confirm_password:
             if not User.objects.filter(email=email).exists():
                 # Create new user
-                user = User.objects.create(
-                    first_name=name,  # Store 'name' in 'first_name' field
+                User.objects.create(
+                    name=name,
+                    
                     email=email,
-                    username=email  # Use email as username
+                    phone=phone,
+                    password=password, 
+                    confirm_password=confirm_password
                 )
-                user.set_password(password)  # Hash password
-                user.save()
-
-                # Send welcome email
-                send_welcome_email(user)
-                
                 return redirect('login')
-            else:
+            else:               
                 return redirect('register')
         else:
             return redirect('register')
 
-    return render(request, 'Registerpage.html')  # Ensure the form renders for GET requests
+          # Redirect to login after successful registration
+
+    return render(request, 'Registerpage.html')
