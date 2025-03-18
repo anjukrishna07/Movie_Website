@@ -459,35 +459,61 @@ def payment_page(request):
 
 
 
+from django.contrib.auth import login
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.conf import settings
 
 
-def register(request):
-    if request.method =='POST':
-        name=request.POST.get('name')
-        phone=request.POST.get('phone')
-        email=request.POST.get('email')
-        password=request.POST.get('password')
-        confirm_password=request.POST.get('confirm_password')
-       
+# Send Welcome Email
+def send_welcome_email(user):
+    """Send a welcome email after user registration."""
+    template = render_to_string('email_template.html', {'name': user.first_name})
     
+    email = EmailMessage(
+        subject="Welcome to Play Show!",
+        body=template,
+        from_email=settings.EMAIL_HOST_USER,
+        to=[user.email],
+    )
+    email.content_subtype = "html"
+    email.fail_silently = False
+    email.send()
 
-        if password == confirm_password:
-            if not User.objects.filter(email=email).exists():
-                # Create new user
-                User.objects.create(
-                    name=name,
-                    
-                    email=email,
-                    phone=phone,
-                    password=password, 
-                    confirm_password=confirm_password
-                )
-                return redirect('login')
-            else:               
-                return redirect('register')
-        else:
-            return redirect('register')
+# User Registration
+def register(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        phone = request.POST.get('phone')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
 
-          # Redirect to login after successful registration
+        # Check if passwords match
+        if password != confirm_password:
+            return render(request, 'Registerpage.html', {'error': "Passwords do not match!"})
+
+        # Check if the email is already registered
+        if User.objects.filter(email=email).exists():
+            return render(request, 'Registerpage.html', {'error': "Email already exists!"})
+
+        # Create user with hashed password
+        user = User.objects.create_user(
+            username=email,  # Use email as username
+            first_name=name,
+            email=email,
+            password=password  # Automatically hashed
+        )
+        
+        # Create UserProfile to store phone number
+        User.objects.create(user=user, phone=phone)
+
+        # Send welcome email
+        send_welcome_email(user)
+
+        # Log the user in automatically after registration
+        login(request, user)
+
+        return redirect('usermovie')
 
     return render(request, 'Registerpage.html')

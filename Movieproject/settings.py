@@ -126,6 +126,14 @@ MEDIA_ROOT = BASE_DIR/'media'
 
 
 
+#SMTP Configuration
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'anjukrish024@gmail.com'  # Replace with your email
+EMAIL_HOST_PASSWORD = 'rnbv oniy pudd fqsb'  # Use an App Password, NOT your actual password
 
 
 # Default primary key field type
