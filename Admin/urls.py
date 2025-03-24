@@ -3,7 +3,7 @@ from Admin import views
 
 
 urlpatterns = [
-    path('',views.home,name='home'),
+    path('home',views.home,name='home'),
     path('addmovie',views.addmovie,name='addmovie'),
     path('viewmovie',views.viewmovie,name='viewmovie'),
     path('edit_detail/<int:movieid>',views.edit_detail,name='edit_detail'),

@@ -1,11 +1,155 @@
-{% extends 'genreoption.html' %}
+<!DOCTYPE html>
 {% load static %}
 
-{% block subscription %}
+<body style="background-image: url('{% static "css/img/paymentnetflix.png" %}'); 
+             background-size: 150%; 
+             background-position: center; 
+             background-repeat: no-repeat;">
+
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Play Show</title>
+	<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+	<link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+	<link href="{% static 'css/global.css' %}" rel="stylesheet">
+	<link href="{% static 'css/index.css' %}" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Overpass&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+	<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+</head>
+
+<body>
+	
+
+	<div class="main clearfix position-relative">
+		<div class="main_1 clearfix position-absolute top-0 w-100">
+			<section id="header">
+				<nav class="navbar navbar-expand-md navbar-light" id="navbar_sticky">
+					<div class="container-xl">
+						<a class="navbar-brand fs-2 p-0 fw-bold text-white m-0 me-5" href="index.html"><i class="fa-brands fa-youtube me-1 col_red"></i>
+							Play Show </a>
+						<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+							data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+							aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+							<ul class="navbar-nav mb-0">
+
+								<li class="nav-item">
+									<a class="nav-link active" aria-current="page" href="{% url 'usermovie' %}">Home</a>
+								</li>
+
+								<li class="nav-item">
+									<a class="nav-link" href="{% url 'usermovie' %}">About</a>
+								</li>
+
+
+
+								
+
+								<li class="nav-item">
+									<a class="nav-link" href="{% url 'usermovie' %}">Team</a>
+								</li>
+
+								<li class="nav-item">
+									<a class="nav-link" href="{% url 'usermovie' %}">Contact</a>
+								</li>
+
+							</ul>
+							<ul class="navbar-nav mb-0 ms-auto">
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle dropdown_search" href="#" id="navbarDropdown"
+										role="button" data-bs-toggle="dropdown" aria-expanded="true">
+										<i class="fa fa-search"></i>
+									</a>
+									<ul class="dropdown-menu drop_1 drop_o p-3" aria-labelledby="navbarDropdown"
+										data-bs-popper="none">
+										<li>
+											<div class="input-group p-2">
+												<input type="text" class="form-control border-0"
+													placeholder="Search Here">
+												<span class="input-group-btn">
+													<button class="btn btn-primary bg-transparent border-0 fs-5"
+														type="button">
+														<i class="fa fa-search col_red"></i> </button>
+												</span>
+
+                                                
+                
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="{% url 'subscription' %}">
+                                                        <i class="fa-solid fa-money-bill"></i>Premium
+                                                    </a>
+                                                </ul>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="{% url 'viewaccount' %}">
+                                                        <i class="fa fa-user fs-4 align-middle me-1 lh-1 col_red"></i>Account
+                                                    </a>
+                                                </ul>
+											</div>
+										</li>
+									</ul>
+								</li>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle dropdown_search" href="#" id="navbarDropdown"
+										role="button" data-bs-toggle="dropdown" aria-expanded="true">
+										<i class="fa fa-bell-o"></i>
+									</a>
+									<ul class="dropdown-menu drop_1 drop_o drop_o1 p-0" aria-labelledby="navbarDropdown"
+										data-bs-popper="none">
+										<li class="bg_red text-white p-3 fw-bold">
+											Notification <span
+												class="bg-white col_red span_1  rounded-circle d-inline-block me-1">3</span>
+										</li>
+										<li class="p-3 pb-0">
+											<div class="row">
+												<div class="col-md-2 pe-0 col-2"><i
+														class="fa fa-circle col_red font_8"></i></div>
+												<div class="col-md-10 ps-0 col-10">
+													<a class="fw-normal text-capitalize" href="#">Semper</a> download
+													2000+ Simple Line Icons and Explore<br>
+													<span class="text-muted font_14">2 Days</span>
+												</div>
+											</div>
+										</li>
+										<hr>
+										<li class="p-3 pt-0">
+											<div class="row">
+												<div class="col-md-2 pe-0 col-2"><i
+														class="fa fa-circle col_red font_8"></i></div>
+												<div class="col-md-10 ps-0 col-10">
+													Added new movie <a class="fw-normal text-capitalize"
+														href="#">Porta</a> Cheatsheet to Start Using With Your
+													Projects.<br>
+													<span class="text-muted font_14">3 Days</span>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</li>
+							
+						</div>
+					</div>
+				</nav>
+			</section>
+
+		</div>
+
+
 <!-- Font Awesome 6 CDN -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-<body style="background-color: #56264d; color: white;">
+
+
     <div class="container py-5">
         <br><br><br>
         <h2 class="text-center mb-4" style="color: red;">CHOOSE YOUR PLAN</h2>
@@ -16,6 +160,7 @@
             <div class="col-md-4 mb-4">
                 <div class="card p-4 text-center bg-dark text-white" style="border-radius: 10px;">
                     <h4>PLEASE SUBSCRIBE TO WATCH MOVIE</h4>
+                    
                     
                     
                     <button class="btn w-100" style="background-color: #e50914; color: white; border: none;"
@@ -62,4 +207,4 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-{% endblock %}
+

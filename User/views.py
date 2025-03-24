@@ -335,18 +335,33 @@ def dislike_movie(request, movie_id):
 
 
 
+
 def movie_detail(request, id):
     if 'user_id' not in request.session:
         return redirect('login')
 
-    # Fetch the movie details
+    user_id = request.session['user_id']
     moviedtl = Movies.objects.filter(id=id).first()
+
     if not moviedtl:
         return redirect('usermovie')
 
-    context = {'moviedtl': moviedtl}
-    return render(request, "movie_detail.html", context)
+    # Fetch user's like/dislike reaction
+    user_reaction = MovieReaction.objects.filter(user_id=user_id, movie=moviedtl).first()
+    user_has_liked = user_reaction.reaction == "like" if user_reaction else False
+    user_has_disliked = user_reaction.reaction == "dislike" if user_reaction else False
 
+    # Check if the user added the movie to Watch Later
+    user_has_watch_later = WatchLater.objects.filter(user_id=user_id, movie=moviedtl).exists()
+
+    context = {
+        'moviedtl': moviedtl,
+        'user_has_liked': user_has_liked,
+        'user_has_disliked': user_has_disliked,
+        'user_has_watch_later': user_has_watch_later
+    }
+
+    return render(request, "movie_detail.html", context)
 
 
 
@@ -440,7 +455,7 @@ def subscribe(request):
 
         print(f"Subscription {'created' if created else 'updated'} successfully!")
 
-        return redirect("subscription")  # Redirect to subscription page
+        return redirect("usermovie")  # Redirect to subscription page
 
     # ✅ Fetch available plans for selection
     plans = Premium.objects.all()
@@ -459,28 +474,32 @@ def payment_page(request):
 
 
 
-from django.contrib.auth import login
+
+
+
+
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.conf import settings
+from django.contrib import messages
 
 
-# Send Welcome Email
 def send_welcome_email(user):
     """Send a welcome email after user registration."""
-    template = render_to_string('email_template.html', {'name': user.first_name})
-    
-    email = EmailMessage(
-        subject="Welcome to Play Show!",
-        body=template,
-        from_email=settings.EMAIL_HOST_USER,
-        to=[user.email],
-    )
-    email.content_subtype = "html"
-    email.fail_silently = False
-    email.send()
+    try:
+        template = render_to_string('email_template.html', {'name': user.name})
+        email = EmailMessage(
+            subject="Welcome to Play Show!",
+            body=template,
+            from_email=settings.EMAIL_HOST_USER,
+            to=[user.email],
+        )
+        email.content_subtype = "html"
+        email.fail_silently = True  # Prevents errors from breaking registration
+        email.send()
+    except Exception as e:
+        print(f"Email sending failed: {e}")  # Log error for debugging
 
-# User Registration
 def register(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -491,29 +510,32 @@ def register(request):
 
         # Check if passwords match
         if password != confirm_password:
-            return render(request, 'Registerpage.html', {'error': "Passwords do not match!"})
+            messages.error(request, "Passwords do not match!")
+            return render(request, 'registerpage.html')
 
-        # Check if the email is already registered
+        # Check if email already exists
         if User.objects.filter(email=email).exists():
-            return render(request, 'Registerpage.html', {'error': "Email already exists!"})
+            messages.error(request, "Email is already registered!")
+            return render(request, 'registerpage.html')
 
-        # Create user with hashed password
-        user = User.objects.create_user(
-            username=email,  # Use email as username
-            first_name=name,
-            email=email,
-            password=password  # Automatically hashed
-        )
-        
-        # Create UserProfile to store phone number
-        User.objects.create(user=user, phone=phone)
+        # Create new user
+        try:
+            user = User.objects.create(
+                name=name,
+                phone=phone,
+                email=email,
+                password=password,  # Storing plaintext password (not recommended)
+                confirm_password=confirm_password
+            )
 
-        # Send welcome email
-        send_welcome_email(user)
+            # Send welcome email
+            send_welcome_email(user)
 
-        # Log the user in automatically after registration
-        login(request, user)
+            messages.success(request, "Registration successful! Please log in.")
+            return redirect('login')
 
-        return redirect('usermovie')
+        except Exception as e:
+            messages.error(request, f"Registration failed: {e}")
+            return render(request, 'registerpage.html')
 
-    return render(request, 'Registerpage.html')
+    return render(request, 'registerpage.html')
